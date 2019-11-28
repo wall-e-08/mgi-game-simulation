@@ -11,7 +11,7 @@ const app = new Vue({
         <div class="row">
             <div class="col-md-8">
                 <p class="mb-0">Game time: <span class="font-weight-bold">{{ formatted_game_time }}</span></p>
-                <p class="mb-0">Coin: <span class="font-weight-bold">{{ game_coin }}</span></p>
+                <p class="mb-0">Coin: <span class="font-weight-bold">{{ game_coin }} <span class="font-weight-normal" v-if="game_coin == max_coin">(reached max)</span></span></p>
             </div>
             <div class="col-md-4">
                 <aside>
