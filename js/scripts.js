@@ -6,6 +6,7 @@ const app = new Vue({
         add_coin_per_sec: 5,
         game_time_in_sec: 0,
         game_coin: 0,
+        loadable_data: ['initial_coin', 'max_coin', 'add_coin_per_sec', 'game_time_in_sec', 'game_coin']
     },
     template: `
         <div class="row">
@@ -27,13 +28,10 @@ const app = new Vue({
         </div>
     `,
     created() {
-        this.game_time_in_sec = parseInt(window.localStorage['game_time_in_sec']);
-        this.game_coin = parseInt(window.localStorage['game_coin']);
-        this.initial_coin = parseInt(window.localStorage['initial_coin']);
-        this.max_coin = parseInt(window.localStorage['max_coin']);
+        this.load_from_localstorage();
 
         if (this.game_coin === 0)
-        this.game_coin = this.initial_coin;
+            this.game_coin = this.initial_coin;
     },
     computed: {
         formatted_game_time: function () {
@@ -54,10 +52,17 @@ const app = new Vue({
     },
     methods: {
         save_data_to_localstorage: function () {
-            window.localStorage['game_time_in_sec'] = this.game_time_in_sec;
-            window.localStorage['game_coin'] = this.game_coin;
-            window.localStorage['initial_coin'] = this.initial_coin;
-            window.localStorage['max_coin'] = this.max_coin;
+            for (let _key of this.loadable_data) {
+                window.localStorage[_key] = this[_key];
+            }
         },
+        load_from_localstorage: function () {
+            for (let _key of this.loadable_data) {
+                let _int_val = parseInt(window.localStorage[_key]);
+                if (!isNaN(_int_val)) {
+                    this[_key] = _int_val;
+                }
+            }
+        }
     },
 });
