@@ -178,3 +178,4 @@ dmypy.json
 .DS_Store
 db/db_info
 db/db_info.sh
+.netlify/

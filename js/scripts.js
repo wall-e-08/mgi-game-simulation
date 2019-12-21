@@ -19,11 +19,20 @@ const app = new Vue({
                         <p class="mb-0">Initial Coin: <span class="font-weight-bold">{{ initial_coin }}</span></p>
                         <p class="mb-0">Max Coin: <span class="font-weight-bold">{{ max_coin }}</span></p>
                     </div>
+                    <div class="mt-4">
+                    
+                    </div>
                 </aside>
             </div>
         </div>
     `,
     created() {
+        this.game_time_in_sec = parseInt(window.localStorage['game_time_in_sec']);
+        this.game_coin = parseInt(window.localStorage['game_coin']);
+        this.initial_coin = parseInt(window.localStorage['initial_coin']);
+        this.max_coin = parseInt(window.localStorage['max_coin']);
+
+        if (this.game_coin === 0)
         this.game_coin = this.initial_coin;
     },
     computed: {
@@ -39,7 +48,16 @@ const app = new Vue({
                 if (this.game_coin < this.max_coin) {
                     this.game_coin += this.add_coin_per_sec;
                 }
+                this.save_data_to_localstorage();
             },1000);
         })
-    }
+    },
+    methods: {
+        save_data_to_localstorage: function () {
+            window.localStorage['game_time_in_sec'] = this.game_time_in_sec;
+            window.localStorage['game_coin'] = this.game_coin;
+            window.localStorage['initial_coin'] = this.initial_coin;
+            window.localStorage['max_coin'] = this.max_coin;
+        },
+    },
 });
