@@ -16,6 +16,13 @@ const app = new Vue({
             <div class="col-md-8">
                 <p class="mb-0">Game time: <span class="font-weight-bold">{{ formatted_game_time }}</span></p>
                 <p class="mb-0">Coin: <span class="font-weight-bold">{{ game_coin }} <span class="font-weight-normal" v-if="game_coin == max_coin">(reached max)</span></span></p>
+                <hr>
+                <div class="input-group">
+                   <input type="number" style="max-width: 200px" class="form-control" v-model="coin_for_clickable_addition">
+                   <span class="input-group-btn">
+                        <button class="btn btn-primary rounded-0 rounded-right" type="button" v-on:click="add_coin_by_click">Add</button>
+                   </span>
+                </div>
             </div>
             <div class="col-md-4">
                 <aside>
@@ -23,13 +30,6 @@ const app = new Vue({
                         <p class="mb-0">Initial Coin: <span class="font-weight-bold">{{ initial_coin }}</span></p>
                         <p class="mb-0">Max Coin: <span class="font-weight-bold">{{ max_coin }}</span></p>
                         <div class="mt-4">
-                            <div class="input-group">
-                               <input type="number" class="form-control" v-model="coin_for_clickable_addition">
-                               <span class="input-group-btn">
-                                    <button class="btn btn-primary rounded-0 rounded-right" type="button" v-on:click="add_coin_by_click">Add</button>
-                               </span>
-                            </div>
-                            <hr>
                             <button class="btn btn-danger" v-on:click="reset_localstorage">Reset Data</button>
                         </div>
                     </div>
