@@ -6,7 +6,10 @@ const app = new Vue({
         add_coin_per_sec: 5,
         game_time_in_sec: 0,
         game_coin: 0,
-        loadable_data: ['initial_coin', 'max_coin', 'add_coin_per_sec', 'game_time_in_sec', 'game_coin']
+        coin_for_clickable_addition: 5,
+
+        // don't change any data below,
+        loadable_data: ['initial_coin', 'max_coin', 'add_coin_per_sec', 'game_time_in_sec', 'game_coin'],
     },
     template: `
         <div class="row">
@@ -19,9 +22,16 @@ const app = new Vue({
                     <div class="border border-dark p-4">
                         <p class="mb-0">Initial Coin: <span class="font-weight-bold">{{ initial_coin }}</span></p>
                         <p class="mb-0">Max Coin: <span class="font-weight-bold">{{ max_coin }}</span></p>
-                    </div>
-                    <div class="mt-4">
-                    
+                        <div class="mt-4">
+                            <div class="input-group">
+                               <input type="number" class="form-control" v-model="coin_for_clickable_addition">
+                               <span class="input-group-btn">
+                                    <button class="btn btn-primary rounded-0 rounded-right" type="button" v-on:click="add_coin_by_click">Add</button>
+                               </span>
+                            </div>
+                            <hr>
+                            <button class="btn btn-danger" v-on:click="reset_localstorage">Reset Data</button>
+                        </div>
                     </div>
                 </aside>
             </div>
@@ -62,6 +72,24 @@ const app = new Vue({
                 if (!isNaN(_int_val)) {
                     this[_key] = _int_val;
                 }
+            }
+        },
+        reset_localstorage: function () {
+            this.initial_coin = 100;
+            this.max_coin = 500;
+            this.add_coin_per_sec = 5;
+            this.game_time_in_sec = 0;
+            this.game_coin = 0;
+        },
+        add_coin_by_click: function () {
+            let _int_coins = parseInt(this.coin_for_clickable_addition);
+            if (isNaN(_int_coins)) {
+                _int_coins = 0;
+            }
+            if ((this.game_coin + _int_coins) < this.max_coin) {
+                this.game_coin += _int_coins;
+            } else {
+                this.game_coin = this.max_coin
             }
         }
     },
